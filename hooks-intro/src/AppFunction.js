@@ -37,6 +37,7 @@ const AppFunction = () => {
         }
     }, 
         // we specify any dependencies for sideEffect that will not be removed
+        // similar to componentDidUpdate
         [count]
     );
 
