@@ -4,11 +4,27 @@ const AppFunction = () => {
 
     const [count, setCount] = useState(0);
     const [isOn, setIsOn] = useState(false);
+    const [mousePosition, setMousePosition] = useState({x: null, y: null})
 
     // useEffect is triggered after each render
+    // similar to componentDidMount
     useEffect(() => {
         document.title = `You have clicked ${count} times`;
-    })
+        window.addEventListener('mousemove', handleMouseMove);
+
+
+        // similar to componentWillUnmount
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        }
+    }, [count]);
+
+    const handleMouseMove = event => {
+        setMousePosition({
+            x: event.pageX,
+            y: event.pageY
+        })
+    }
 
     const incrementCount = () => {
         setCount(prevCount => prevCount + 1);
@@ -35,6 +51,9 @@ const AppFunction = () => {
                 onClick={toggleLight}
                 alt="Flashlight">
             </img>
+            <h2>Mouse Position</h2>
+            {JSON.stringify(mousePosition, null, 2)}
+            <br />
         </Fragment>
         
     )
